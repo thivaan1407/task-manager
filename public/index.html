@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taskboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- AUTH VIEW -->
+  <main id="auth-view" class="auth" hidden>
+    <section class="auth-card">
+      <h1 class="brand">Taskboard</h1>
+      <p class="auth-sub" id="auth-sub">Log in to see your tasks.</p>
+
+      <form id="auth-form" novalidate>
+        <label id="name-field" hidden>Name
+          <input type="text" name="name" autocomplete="name" />
+        </label>
+        <label>Email
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" autocomplete="current-password" minlength="8" required />
+        </label>
+        <p class="form-error" id="auth-error" role="alert"></p>
+        <button type="submit" class="btn primary" id="auth-submit">Log in</button>
+      </form>
+
+      <p class="auth-switch">
+        <span id="switch-text">New here?</span>
+        <button type="button" class="link" id="switch-mode">Create an account</button>
+      </p>
+    </section>
+  </main>
+
+  <!-- APP VIEW -->
+  <div id="app-view" hidden>
+    <header class="topbar">
+      <h1 class="brand">Taskboard</h1>
+      <div class="topbar-right">
+        <span class="live" id="live" title="Live updates"><i></i><span id="live-text">Connecting</span></span>
+        <span class="user" id="user-name"></span>
+        <button class="btn ghost" id="logout">Log out</button>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <input type="search" id="search" placeholder="Search tasks" aria-label="Search tasks" />
+      <select id="filter-priority" aria-label="Filter by priority">
+        <option value="">All priorities</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <button class="btn primary" id="new-task">Add task</button>
+    </section>
+
+    <main class="board" id="board">
+      <section class="lane" data-status="todo">
+        <h2>To do <span class="count" id="count-todo">0</span></h2>
+        <div class="cards" id="list-todo"></div>
+      </section>
+      <section class="lane" data-status="in_progress">
+        <h2>In progress <span class="count" id="count-in_progress">0</span></h2>
+        <div class="cards" id="list-in_progress"></div>
+      </section>
+      <section class="lane" data-status="done">
+        <h2>Done <span class="count" id="count-done">0</span></h2>
+        <div class="cards" id="list-done"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- TASK DIALOG -->
+  <dialog id="task-dialog">
+    <form id="task-form" method="dialog" novalidate>
+      <h2 id="dialog-title">Add task</h2>
+      <label>Title
+        <input type="text" name="title" maxlength="120" required />
+      </label>
+      <label>Description
+        <textarea name="description" rows="3" maxlength="2000"></textarea>
+      </label>
+      <div class="row">
+        <label>Status
+          <select name="status">
+            <option value="todo">To do</option>
+            <option value="in_progress">In progress</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+        <label>Priority
+          <select name="priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <label>Due date
+          <input type="date" name="due_date" />
+        </label>
+      </div>
+      <p class="form-error" id="task-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" id="cancel-task">Cancel</button>
+        <button type="submit" class="btn primary" id="save-task">Save task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
